@@ -1,0 +1,94 @@
+﻿@model WebTimeSheetManagement.Models.AssignedProjectsModel
+
+@{
+    ViewBag.Title = "AssignedProjects";
+    Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+}
+
+<h2>AssignProjects</h2>
+
+@using (Html.BeginForm())
+{
+    <!--@Html.AntiForgeryToken()-->
+
+
+    
+        <div class="panel panel-default">
+            <div class="panel-heading">AssignProject</div>
+            <div class="panel-body">
+
+                @if (TempData["MessageProject"] != null)
+                {
+                    <p class="alert alert-success" id="successMessage">@TempData["MessageProject"] </p>
+                }
+
+                @if (TempData["MessageErrorProject"] != null)
+                {
+                    <p class="alert alert-danger" id="successMessage">@TempData["MessageErrorProject"] </p>
+                }
+
+                @Html.AntiForgeryToken()
+
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.Label("AdminName");
+                        @Html.DropDownListFor(a => a.RegistrationID, new SelectList(Model.ListofAdmins, "RegistrationID", "Name"), new { @class = "form-control" })
+                        @Html.ValidationMessageFor(a => a.RegistrationID)
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Choose Projrct To Assign to Admin</div>
+            <div class="panel-body">
+                <div class="clearfix"></div>
+                <div class="row">
+                 
+
+                      
+
+                        @for (var i = 0; i < Model.ListOfProjects.Count(); i++)
+                        {
+
+
+                            <div class="col-md-4">
+                                <div>
+                                    @Html.CheckBoxFor(it => Model.ListOfProjects[i].SelectedProject)
+                                    <label>
+                                        @Html.DisplayFor(it => Model.ListOfProjects[i].ProjectName)
+                                        @Html.HiddenFor(it => Model.ListOfProjects[i].ProjectID)
+                                        @Html.HiddenFor(it => Model.ListOfProjects[i].ProjectName)
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        }
+
+                    
+                </div>
+                <br />
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-offset-0 col-md-12">
+                            <input type="submit" value="Assign Project" class="btn btn-success" />
+
+                            @Html.ActionLink("Cancel", "Dashboard", "SuperAdmin", null, new { @class = "btn btn-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@

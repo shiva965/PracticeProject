@@ -1,0 +1,103 @@
+﻿@model WebTimeSheetManagement.Models.UserInfo
+
+@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Shared/_LayoutSuperAdmin.cshtml";
+}
+
+<h2>CreateUser</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Create User</div>
+    <div class="panel-body">
+
+        @if (TempData["MessageRegistration"] != null)
+        {
+            <p class="alert alert-success" id="successMessage">@TempData["MessageRegistration"]</p>
+        }
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @using (Html.BeginForm())
+        {
+@Html.AntiForgeryToken()
+
+                <div>
+                    <div class="col-lg-4">
+                        @Html.LabelFor(model => model.FName, htmlAttributes: new { @class = "control-label manadatory" })
+                        @Html.TextBoxFor(model => model.FName)
+                        @*<input type="text" id="txtFName" />*@
+                        @Html.ValidationMessageFor(model => model.FName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.LabelFor(model => model.MName, htmlAttributes: new { @class = "control-label manadatory" })
+                        @*<input type="text" id="txtMName" />*@
+                        @Html.TextBoxFor(model => model.MName)
+                        @Html.ValidationMessageFor(model => model.MName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.LabelFor(model => model.LName, htmlAttributes: new { @class = "control-label manadatory" })
+                        @*<input type="text" id="txtLName" />*@
+                        @Html.TextBoxFor(model => model.LName)
+                        @Html.ValidationMessageFor(model => model.LName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-lg-4">
+                        @Html.LabelFor(model => model.UName, htmlAttributes: new { @class = "control-label manadatory" })
+                        @Html.TextBoxFor(model => model.UName, new { @class = "form-control",  @onblur = "CheckUsernameExists();" })
+
+                        @*<input type="text" id="txtUName" />*@
+                        <span style="color:red" id="spn2Uname"></span>
+                        <span style="color:green" id="spn1Uname"></span>
+                        @Html.ValidationMessageFor(model => model.UName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="col-lg-4">
+                        <input type="submit" value="Register" class="btn btn-success" />
+                    </div>
+
+
+
+                    <br />
+                    <div class="row">
+
+                        @Html.ActionLink("Clear", "Register", "Registration", null, new { @class = "btn btn-danger" })
+
+                        @Html.ActionLink("All Users", "Users", "AllUsers", null, new { @class = "btn btn-info" })
+
+                    </div>
+                </div>}
+
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function CheckUsernameExists()
+    {
+        var url = '@Url.Content("~/")' + "Registration/CheckUNameExists";
+        var source = "#UName";
+        var span1 = $("#spn1Uname");
+        var span2 = $("#spn2Uname");
+        $.post(url, { UName: $(source).val() }, function (data) {
+            if (data) {
+                $(source).val('');
+                span2.text("UserName Already Exists!").show();
+                /alert("Username Already Used try unique one!");/
+            }
+            else {
+                span1.text("UserName Available to use!").show();
+
+            }
+        });
+    }
+    
+    $('#LName').change(function () {
+        changeThird();
+    });
+
+    function changeThird() {
+        var minNumber = 1;
+        var maxNumber = 100;
+        var randomnumber = Math.floor(Math.random() * (maxNumber + 1) + minNumber);
+        $('#UName').val($('#FName').val() + ' ' + $('#LName').val() + randomnumber);
+    }
+</script>
