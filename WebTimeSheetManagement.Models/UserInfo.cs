@@ -11,9 +11,7 @@ namespace WebTimeSheetManagement.Models
     [Table("UserInfo")]
     public class UserInfo
     {
-        /// <summary>
-        /// shiva added this file
-        /// </summary>
+        
         [Key]
         public int UID { get; set; }
 
