@@ -18,8 +18,7 @@ namespace WebTimeSheetManagement.Models
         [Required(ErrorMessage = "Enter FName")]
         public string FName { get; set; }
 
-        //[Required(ErrorMessage = "Enter LName")]
-        //public string MName { get; set; }
+      
 
         [Required(ErrorMessage = "Enter MName")]
         public string LName { get; set; }
