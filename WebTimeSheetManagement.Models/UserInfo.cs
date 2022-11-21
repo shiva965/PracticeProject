@@ -11,7 +11,8 @@ namespace WebTimeSheetManagement.Models
     [Table("UserInfo")]
     public class UserInfo
     {
-       
+        /// <summary>
+        /// shiva added this file
         /// </summary>
         [Key]
         public int UID { get; set; }
@@ -19,8 +20,8 @@ namespace WebTimeSheetManagement.Models
         [Required(ErrorMessage = "Enter FName")]
         public string FName { get; set; }
 
-        [Required(ErrorMessage = "Enter LName")]
-        public string MName { get; set; }
+        //[Required(ErrorMessage = "Enter LName")]
+        //public string MName { get; set; }
 
         [Required(ErrorMessage = "Enter MName")]
         public string LName { get; set; }
